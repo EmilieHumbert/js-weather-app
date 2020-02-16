@@ -2,30 +2,40 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
   </head>
   <body>
     <div className="App">
       <header className="App-header">
-        <div>
-          <p id="display-weather"></p>
-          <p id="display-temperature"></p>
-          <p id="display-humidity"></p>
-          <p id="display-wind"></p>
-          </p>
+        <div id="display-items" class="display-items">
+          <p id="display-location" class="location"></p>
+          <img id="img" />
+          <div  class="weather">
+            Weather: 
+            <span id="display-weather"></span>
+          </div>
+          <div class="temperature">
+            Temperature: 
+            <span id="display-temperature"></span>
+          </div>
+          <div class="humidity">
+            Humidity: 
+            <span id="display-humidity"></span>
+          </div>
+          <div class="wind">
+            Wind: 
+            <span id="display-wind"></span>
+          </div>
+
         </div>
-        <div>
-          <input type="text" placeholder="Search.." id="submitInput" />
-          <button id="submitBtn">Submit</button>
-        </div>
-        <div>
-          <button id="farhenheit">Farhenheit</button>
-          <button id="celsius">Celsius</button>
+        <div class="search">
+          <input type="text" placeholder="Paris" id="submitInput" class="submitInput" />
+          <button id="submitBtn" class="submitBtn">Submit</button>
         </div>
       </header>
     </div>
 </body>
-<!-- <script src="https://cdn.aerisapi.com/sdk/js/latest/aerisweather.min.js"></script> -->
-<script src="aerisweather.min.js"></script>
+
 <script src="script.js"></script>
 </html>

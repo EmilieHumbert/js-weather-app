@@ -1,22 +1,33 @@
-let displayTemperature = document.getElementById('display-temperature');
-let displayHumidity = document.getElementById('display-humidity');
-let displayWind = document.getElementById('display-wind');
-let displayWeather = document.getElementById('display-weather');
+(function () {
+  const temperature = document.getElementById('display-temperature');
+  const locationInput = document.getElementById('submitInput');
+  const weatherSummary = document.getElementById('display-weather');
+  const humidity = document.getElementById('display-humidity');
+  const wind = document.getElementById('display-wind');
+  const location = document.getElementById('display-location');
+
+  async function doFetch() {
+    const locationQuery = locationInput.value || 'Paris';
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${locationQuery}&appid=60fee5f1883f2bcb8859a8b45aebc7e2&units=metric`,
+      { mode: 'cors' }
+    )
+    const weatherData = await response.json();
+    temperature.innerHTML = Math.round(weatherData.main.temp) + ' &deg;C';
+    weatherSummary.innerHTML = weatherData.weather[0].description;
+    humidity.innerHTML = weatherData.main.humidity + '%';
+    wind.innerHTML = weatherData.wind.speed + ' km/h';
+    location.innerHTML = weatherData.name;
+
+    let img = document.getElementById('img');
+    let code = weatherData.weather[0].icon;
+
+    img.src = `http://openweathermap.org/img/wn/${code}@2x.png`;
+  }
 
 
-function weatherDetail() {
-  let location = document.getElementById('submitInput').value || 'paris,fr';
-	const aeris = new AerisWeather('SPyn10r7ceioTjRkIBC2n', '1NkYSLvQll8RHWrd02mIwO3cmB3LHwDVDv9oXEUx');
-	const request = aeris.api().endpoint('observations').place(location).format('json').filter('allstations').limit(1);
-	request.get().then((result) => {
-    displayWeather.innerHTML = 'Today the weather in ' + location + ' is ' + result.data.ob.weather;
-    displayTemperature.innerHTML = 'Temperature: ' + result.data.ob.tempC + ' C';
-    displayHumidity.innerHTML = 'Humidity: ' + result.data.ob.humidity + '%';
-    displayWind.innerHTML = 'Wind speed: ' + result.data.ob.windSpeedKPH + ' km/h';
-   });
-};
+  document.getElementById('submitBtn').addEventListener('click', doFetch);
 
-weatherDetail();
-
-// change location
-document.getElementById('submitBtn').addEventListener('click', weatherDetail);
+  document.addEventListener('DOMContentLoaded', function(){ 
+    doFetch();
+  }, false);
+})();
